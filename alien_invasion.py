@@ -21,14 +21,22 @@ class AlienInvasion:
     def run_game(self):
         """main game cycle"""
         while True:
+            self._check_events()
+            self._update_screen()
+
+    def _check_events(self):
             # check keyboard and mouse
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-            # visualisation last drow display
-            self.ship.blitme()
-            # self.screen.fill(self.bg_color)
-            pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+    def _update_screen(self):
+        # visualisation last drow display
+        # self.screen.fill(self.bg_color)
+        self.ship.blitme()
+        pygame.display.flip()
+
+
 
 if __name__ == "__main__":
     # create instance and game run
