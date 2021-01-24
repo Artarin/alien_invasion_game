@@ -13,15 +13,15 @@ class AlienInvasion:
 
         self.settings = Settings()
         self.screen = pygame.display.set_mode(
-            (self.settings.screen_width,self.settings.screen_height))
+            (self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Babilon-5. Alien invasion")
-        self.screen.fill(self.settings.bg_color)
         self.ship = Ship(self)
 
     def run_game(self):
         """main game cycle"""
         while True:
             self._check_events()
+            self.ship.update_position()
             self._update_screen()
 
     def _check_events(self):
@@ -29,10 +29,41 @@ class AlienInvasion:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                # set move flags to True if button is down
+                if event.key == pygame.K_q:
+                    # fast close game
+                    sys.exit()
+                if event.key == pygame.K_t:
+                    # teleport ship to start position
+                    self.ship.teleport = True
+                if event.key == pygame.K_RIGHT:
+                    # move ship right
+                    self.ship.moving_right = True
+                if event.key == pygame.K_LEFT:
+                    # move ship left
+                    self.ship.moving_left = True
+                if event.key == pygame.K_UP:
+                    # move ship up
+                    self.ship.moving_up = True
+                if event.key == pygame.K_DOWN:
+                    # move ship down
+                    self.ship.moving_down = True    
+            elif event.type == pygame.KEYUP:
+                # set move flags to False if button is up
+                if event.key == pygame.K_RIGHT:
+                    self.ship.moving_right = False
+                if event.key == pygame.K_LEFT:
+                    self.ship.moving_left = False
+                if event.key == pygame.K_UP:
+                    self.ship.moving_up = False
+                if event.key == pygame.K_DOWN:
+                    self.ship.moving_down = False
+              
 
     def _update_screen(self):
-        # visualisation last drow display
-        # self.screen.fill(self.bg_color)
+        # refresh display and drow objects
+        self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
         pygame.display.flip()
 
