@@ -30,20 +30,18 @@ class Ship():
     def update_position(self):
         # update x_coord and y_coord while Flag is True
         if self.moving_right:
-            self.x_coord += self.settings.sheep_speed
+            self.x_coord += self.settings.ship_speed
         if self.moving_left:
-            self.x_coord -= self.settings.sheep_speed
+            self.x_coord -= self.settings.ship_speed
         if self.moving_up:
             # "-" because coordinates come from upper left angle
-            self.y_coord -= self.settings.sheep_speed
+            self.y_coord -= self.settings.ship_speed
         if self.moving_down:
-            self.y_coord += self.settings.sheep_speed
+            self.y_coord += self.settings.ship_speed
         if self.teleport:
             print (f"teleport from {self.rect.x} to {self.start_position_x}")
-            print (f"rect.x = {self.rect.x}")
             self.x_coord = self.start_position_x
             self.y_coord = self.start_position_y
-            print (f"now self.rect.x = {self.rect.x}")
             self.teleport = False
         # update ship position
         self.rect.x = self.x_coord

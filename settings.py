@@ -8,4 +8,4 @@ class Settings():
         self.screen_height = 600
         self.bg_color = (14, 7, 57)
         # ship settings
-        self.sheep_speed = 1.5
+        self.ship_speed = 1.5
