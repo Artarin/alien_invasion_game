@@ -38,16 +38,16 @@ class Ship():
             self.y_coord -= self.settings.sheep_speed
         if self.moving_down:
             self.y_coord += self.settings.sheep_speed
-        # update ship position
-        self.rect.x = self.x_coord
-        self.rect.y = self.y_coord
         if self.teleport:
             print (f"teleport from {self.rect.x} to {self.start_position_x}")
             print (f"rect.x = {self.rect.x}")
-            self.rect.x = self.start_position_x
-            self.rect.y = self.start_position_y
+            self.x_coord = self.start_position_x
+            self.y_coord = self.start_position_y
             print (f"now self.rect.x = {self.rect.x}")
             self.teleport = False
+        # update ship position
+        self.rect.x = self.x_coord
+        self.rect.y = self.y_coord
         
 
     def blitme(self):
