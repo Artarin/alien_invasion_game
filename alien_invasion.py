@@ -24,6 +24,7 @@ class AlienInvasion:
             self.ship.update_position()
             self._update_screen()
             self.settings.fps_controller(self)
+            self.settings.ship_speed_controller()
             
 
     def _check_events(self):

@@ -16,8 +16,9 @@ class Settings():
         self.fps_counter = 0
         self.returned_fps = 0
         # ship settings
-        self.ship_speed = 10.5
-        # if self.delta_time > 16:
+        self.begin_speed = 10.5
+        self.ship_speed = self.begin_speed
+        
        
             
     def fps_controller(self, ai_game):
@@ -42,3 +43,7 @@ class Settings():
         font = pygame.font.Font(None, 25)
         self.fps_overlay = font.render(str(int(self.returned_fps)), True, (254,254,254))
         return (self.fps_overlay)
+
+    def ship_speed_controller(self):
+        if self.returned_fps !=0:
+            self.ship_speed =self.begin_speed * self.returned_fps / self.max_fps
