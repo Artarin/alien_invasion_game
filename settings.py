@@ -45,5 +45,8 @@ class Settings():
         return (self.fps_overlay)
 
     def ship_speed_controller(self):
-        if self.returned_fps !=0:
-            self.ship_speed =self.begin_speed * self.returned_fps / self.max_fps
+        """ up or down ship speed with the fps"""
+        self.ship_speed = round(self.begin_speed*(self.delta_time/16.67), 2)
+        print (self.delta_time, self.ship_speed)
+        # if self.returned_fps !=0:
+        #     self.ship_speed =self.begin_speed * self.returned_fps / self.max_fps
