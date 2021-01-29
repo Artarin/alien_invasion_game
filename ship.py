@@ -1,26 +1,20 @@
 import pygame
 class Ship():
-    """Class for driving spaceship"""
+    """Class for spaceship"""
     def __init__(self, ai_game):
-        """initialization  starship and set it start position"""
         self.screen = ai_game.screen
         self.screen_rect = ai_game.screen.get_rect()
         self.settings = ai_game.settings
-
-        # load ship image and get rectangle.
-        self.image = pygame.image.load('images/star_fury.png').convert()
-        self.image.set_colorkey((0, 0, 0))
-        self.image = pygame.transform.scale(self.image, (100, 60))
-        self.rect = self.image.get_rect()
-        
-        # every new ship creates on bottom of screen
+        self.ship_image = pygame.image.load('images/star_fury.png').convert()
+        self.ship_image.set_colorkey((0, 0, 0))
+        self.ship_image = pygame.transform.scale(self.ship_image, (100, 60))
+        self.rect = self.ship_image.get_rect()
         self.rect.midbottom = self.screen_rect.midbottom
         self.start_position_x = self.rect.x
         self.start_position_y = self.rect.y
         self.x_coord = float(self.rect.x)
         self.y_coord = float(self.rect.y)
 
-        # moving flags:
         self.moving_right = False
         self.moving_left = False
         self.moving_up = False
@@ -28,7 +22,6 @@ class Ship():
         self.teleport = False
 
     def update_position(self):
-        # update x_coord and y_coord while Flag is True
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.x_coord += self.settings.ship_speed
         if self.moving_left and self.rect.left > 0:
@@ -43,11 +36,8 @@ class Ship():
             self.x_coord = self.start_position_x
             self.y_coord = self.start_position_y
             self.teleport = False
-        # update ship position
         self.rect.x = self.x_coord
         self.rect.y = self.y_coord
         
-
     def blitme(self):
-        """drow ship at display"""
-        self.screen.blit(self.image, self.rect)
+        self.screen.blit(self.ship_image, self.rect)
