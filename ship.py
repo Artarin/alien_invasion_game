@@ -29,14 +29,14 @@ class Ship():
 
     def update_position(self):
         # update x_coord and y_coord while Flag is True
-        if self.moving_right:
+        if self.moving_right and self.rect.right < self.screen_rect.right:
             self.x_coord += self.settings.ship_speed
-        if self.moving_left:
+        if self.moving_left and self.rect.left > 0:
             self.x_coord -= self.settings.ship_speed
-        if self.moving_up:
+        if self.moving_up and self.rect.top > self.screen_rect.top:
             # "-" because coordinates come from upper left angle
             self.y_coord -= self.settings.ship_speed
-        if self.moving_down:
+        if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
             self.y_coord += self.settings.ship_speed
         if self.teleport:
             print (f"teleport from {self.rect.x} to {self.start_position_x}")

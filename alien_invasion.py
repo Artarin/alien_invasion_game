@@ -33,7 +33,7 @@ class AlienInvasion:
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                # set move flags to True if button is down
+                1# set move flags to True if button is down
                 if event.key == pygame.K_q:
                     # fast close game
                     sys.exit()
