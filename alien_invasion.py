@@ -19,10 +19,10 @@ class AlienInvasion:
     def run_game(self):
         while True:
             self._check_events()
+            self.settings.fps_controller(self)
             self.ship.update_position()
             self._update_screen()
-            self.settings.fps_controller(self)
-            self.settings.ship_speed_controller()
+            self.ship.apply_dtime_to_ship_speed()
     
     def _check_events(self):
         for event in pygame.event.get():
