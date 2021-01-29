@@ -46,5 +46,5 @@ class Ship():
 
     def apply_dtime_to_ship_speed(self):
         self.delta_time_s = self.settings.delta_time_ms/1000
-        self.ship_speed = (self.settings.ship_speed_per_sec * self.delta_time_s)
+        self.ship_speed = round(self.settings.ship_speed_per_sec * self.delta_time_s, 2)
         print (self.settings.delta_time_ms, self.ship_speed)
