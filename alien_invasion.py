@@ -2,6 +2,7 @@ import sys
 import pygame
 from settings import Settings
 from ship import Ship
+from ship_missile import ShipMissile
 # pylint: disable=no-member
 
 class AlienInvasion:
@@ -15,6 +16,8 @@ class AlienInvasion:
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Babilon-5. Starfury is under attack")
         self.ship = Ship(self)
+        self.missile = ShipMissile(self)
+        self.missiles = pygame.sprite.Group()
         
     def run_game(self):
         while True:
@@ -22,8 +25,11 @@ class AlienInvasion:
             self.settings.fps_controller(self)
             self.ship.update_position()
             self._update_screen()
+            self._update_missiles()
             self.ship.apply_dtime_to_ship_speed()
-    
+            
+                
+            # need later add dtime for missile and for alien ships
     def _check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -35,6 +41,8 @@ class AlienInvasion:
                 self._check_keyup_events(event)
                                 
     def _check_keydown_events(self, event):
+        if event.key == pygame.K_SPACE:
+            self._fire_missile()
         if event.key == pygame.K_q:
             sys.exit()
         if event.key == pygame.K_t:
@@ -58,9 +66,23 @@ class AlienInvasion:
         if event.key == pygame.K_DOWN:
             self.ship.moving_down = False
 
+    def _fire_missile(self):
+        if len(self.missiles) < self.missile.max_on_display:
+            new_missile = ShipMissile(self)
+            self.missiles.add(new_missile)
+
+
+    def _update_missiles(self):
+        self.missiles.update()
+        for missile in self.missiles.copy():
+            if missile.circle_center_coord[1] <= 1:
+                self.missiles.remove(missile)
+            
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
+        for missile in self.missiles.sprites():
+            missile.draw_missile()
         self.screen.blit(self.settings.fps_controller(self), [0,0])
         pygame.display.flip()
 

@@ -15,7 +15,7 @@ class Settings():
         self.returned_fps = 0
 
         self.ship_speed_per_sec = 1000
-        self.rocket_speed_per_sec = 2000
+        self.missile_speed_per_sec = (self.ship_speed_per_sec+200)/self.max_fps
 
     def fps_controller(self, ai_game):
         self.clock.tick(self.max_fps)

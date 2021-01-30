@@ -11,6 +11,7 @@ class Ship():
         self.ship_image = pygame.transform.scale(self.ship_image, (100, 60))
         self.rect = self.ship_image.get_rect()
         self.rect.midbottom = self.screen_rect.midbottom
+        print (f"self.rect.midbottom = {self.rect.midbottom}")
         self.start_position_x = self.rect.x
         self.start_position_y = self.rect.y
         self.x_coord = float(self.rect.x)
@@ -47,4 +48,4 @@ class Ship():
     def apply_dtime_to_ship_speed(self):
         self.delta_time_s = self.settings.delta_time_ms/1000
         self.ship_speed = round(self.settings.ship_speed_per_sec * self.delta_time_s, 2)
-        print (self.settings.delta_time_ms, self.ship_speed)
+        # print (self.settings.delta_time_ms, self.ship_speed)
