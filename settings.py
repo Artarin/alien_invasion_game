@@ -1,10 +1,11 @@
 import pygame
+from random import randint
+
 class Settings():
     """class for saving all serrings game alien invasion"""
 
     def __init__(self, ai_game):
-        # self.screen_width = 800
-        # self.screen_height = 600
+        self.background = pygame.image.load('images/space.jpg')
         self.bg_color = (0, 0, 0)
         self.max_fps = 60
         self.delta_time_ms = 1000 / self.max_fps
@@ -13,9 +14,14 @@ class Settings():
         self.milliseconds_counter = 0
         self.fps_counter = 0
         self.returned_fps = 0
-
         self.ship_speed_per_sec = 1000
         self.missile_speed_per_sec = (self.ship_speed_per_sec+200)/self.max_fps
+        self.enemy_x_speed = (self.ship_speed_per_sec /2) / self.max_fps
+        self.enemy_y_speed = (self.ship_speed_per_sec ) / self.max_fps
+        self.enemy_direction = 1
+    
+    
+
 
     def fps_controller(self, ai_game):
         self.clock.tick(self.max_fps)

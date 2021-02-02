@@ -34,7 +34,7 @@ class Ship():
         if self.moving_down and (self.rect.bottom + self.ship_speed) < self.screen_rect.bottom:
             self.y_coord += self.ship_speed
         if self.teleport:
-            print (f"teleport from {self.rect.x} to {self.start_position_x}")
+            print (f"teleport from {self.rect.x},{self.rect.y} to {self.start_position_x}")
             self.x_coord = self.start_position_x
             self.y_coord = self.start_position_y
             self.teleport = False

@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from ship_missile import ShipMissile
+from enemy import EnemyShip
 # pylint: disable=no-member
 
 class AlienInvasion:
@@ -18,6 +19,8 @@ class AlienInvasion:
         self.ship = Ship(self)
         self.missile = ShipMissile(self)
         self.missiles = pygame.sprite.Group()
+        self.enemys = pygame.sprite.Group()
+        self._create_enemy_ship()
         
     def run_game(self):
         while True:
@@ -26,6 +29,8 @@ class AlienInvasion:
             self.ship.update_position()
             self._update_screen()
             self._update_missiles()
+            self._check_enemy_edges()
+            self._move_enemys()
             self.ship.apply_dtime_to_ship_speed()
             
                 
@@ -45,6 +50,8 @@ class AlienInvasion:
             self._fire_missile()
         if event.key == pygame.K_q:
             sys.exit()
+        if event.key == pygame.K_1:
+            self._move_enemys
         if event.key == pygame.K_t:
             self.ship.teleport = True
         if event.key == pygame.K_RIGHT:
@@ -77,13 +84,53 @@ class AlienInvasion:
         for missile in self.missiles.copy():
             if missile.circle_center_coord[1] <= 1:
                 self.missiles.remove(missile)
+        # collisions = pygame.sprite.groupcollide(self.missiles, self.enemys, True, True)
             
+    def _create_enemy_ship(self):
+        enemy_ship = EnemyShip(self)
+        enemy_ship_wigth, enemy_ship_height  = enemy_ship.rect.size
+        avialible_space_x = self.settings.screen_width - (2*enemy_ship_wigth)
+        number_enemys_x = avialible_space_x // (2*enemy_ship_wigth)
+        avialible_space_y = self.settings.screen_height - (
+                            self.ship.rect.height + 3*enemy_ship_height)
+        number_enemys_y = avialible_space_y//(2*enemy_ship_height)
+        print (number_enemys_y)
+        for enemy_num_y in range (number_enemys_y):
+            for enemy_num_x in range (number_enemys_x):
+                self._create_enemys(enemy_num_x,enemy_num_y, 
+                                    enemy_ship_wigth, enemy_ship_height)
+                
+    def _create_enemys(self, enemy_num_x, enemy_num_y, enemy_ship_wigth,
+                       enemy_ship_height ):
+        enemy = EnemyShip(self)
+        enemy_x = enemy_ship_wigth + 2 * enemy_ship_wigth*enemy_num_x
+        enemy_y = enemy_ship_height + 2 * enemy_ship_height*enemy_num_y
+        enemy.rect.x = enemy_x
+        enemy.rect.y = enemy_y
+        self.enemys.add(enemy)
+
+    def _move_enemys(self):
+        self.enemys.update()
+
+    def _check_enemy_edges(self):
+        for enemy in self.enemys.sprites():
+            if enemy.check_edges():
+                self._change_enemy_direction()
+                break
+
+    def _change_enemy_direction(self):
+        for enemy in self.enemys.sprites():
+            enemy.rect.y += self.settings.enemy_y_speed
+        self.settings.enemy_direction *= -1
+
     def _update_screen(self):
-        self.screen.fill(self.settings.bg_color)
+        # self.screen.fill(self.settings.bg_color)
+        self.screen.blit(self.settings.background, (0,0))
         self.ship.blitme()
         for missile in self.missiles.sprites():
             missile.draw_missile()
         self.screen.blit(self.settings.fps_controller(self), [0,0])
+        self.enemys.draw(self.screen)
         pygame.display.flip()
 
 if __name__ == "__main__":
