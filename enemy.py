@@ -22,7 +22,7 @@ class EnemyShip(Sprite):
             return  True    
 
     def update(self):
-        print (self.rect.x )
+        # print (self.rect.x )
         self.x_position = self.rect.x
         self.x_position +=  self.settings.enemy_x_speed * self.settings.enemy_direction
         self.rect.x = int(self.x_position)

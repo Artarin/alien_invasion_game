@@ -28,9 +28,9 @@ class AlienInvasion:
             self.settings.fps_controller(self)
             self.ship.update_position()
             self._update_screen()
-            self._update_missiles()
             self._check_enemy_edges()
             self._move_enemys()
+            self._update_missiles()
             self.ship.apply_dtime_to_ship_speed()
             
                 
@@ -77,6 +77,7 @@ class AlienInvasion:
         if len(self.missiles) < self.missile.max_on_display:
             new_missile = ShipMissile(self)
             self.missiles.add(new_missile)
+            self.settings.ship_blast.play()
 
 
     def _update_missiles(self):
@@ -84,6 +85,14 @@ class AlienInvasion:
         for missile in self.missiles.copy():
             if missile.circle_center_coord[1] <= 1:
                 self.missiles.remove(missile)
+            for enemy in self.enemys.copy():
+                missile_collide = missile.circle_center_coord.copy()
+                missile_collide[0] -= enemy.rect.width / 10
+                missile_collide[1] += enemy.rect.height / 2
+                if enemy.rect.collidepoint(missile_collide):
+                    self.settings.enemy_destroy.play()
+                    self.missiles.remove(missile)
+                    self.enemys.remove(enemy)
         # collisions = pygame.sprite.groupcollide(self.missiles, self.enemys, True, True)
             
     def _create_enemy_ship(self):
@@ -94,7 +103,6 @@ class AlienInvasion:
         avialible_space_y = self.settings.screen_height - (
                             self.ship.rect.height + 3*enemy_ship_height)
         number_enemys_y = avialible_space_y//(2*enemy_ship_height)
-        print (number_enemys_y)
         for enemy_num_y in range (number_enemys_y):
             for enemy_num_x in range (number_enemys_x):
                 self._create_enemys(enemy_num_x,enemy_num_y, 
@@ -124,7 +132,6 @@ class AlienInvasion:
         self.settings.enemy_direction *= -1
 
     def _update_screen(self):
-        # self.screen.fill(self.settings.bg_color)
         self.screen.blit(self.settings.background, (0,0))
         self.ship.blitme()
         for missile in self.missiles.sprites():
