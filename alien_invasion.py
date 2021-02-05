@@ -20,7 +20,7 @@ class AlienInvasion:
         self.missile = ShipMissile(self)
         self.missiles = pygame.sprite.Group()
         self.enemys = pygame.sprite.Group()
-        self._create_enemy_ship()
+        self._create_enemy_ships()
         
     def run_game(self):
         while True:
@@ -93,9 +93,13 @@ class AlienInvasion:
                     self.settings.enemy_destroy.play()
                     self.missiles.remove(missile)
                     self.enemys.remove(enemy)
-        # collisions = pygame.sprite.groupcollide(self.missiles, self.enemys, True, True)
+        if not self.enemys:
+            self.missiles.empty()
+            self._create_enemy_ships()
+
+        
             
-    def _create_enemy_ship(self):
+    def _create_enemy_ships(self):
         enemy_ship = EnemyShip(self)
         enemy_ship_wigth, enemy_ship_height  = enemy_ship.rect.size
         avialible_space_x = self.settings.screen_width - (2*enemy_ship_wigth)

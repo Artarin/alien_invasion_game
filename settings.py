@@ -19,8 +19,8 @@ class Settings():
         self.enemy_x_speed = (self.ship_speed_per_sec /2) / self.max_fps
         self.enemy_y_speed = (self.ship_speed_per_sec ) / self.max_fps
         self.enemy_direction = 1
-        pygame.mixer.music.load('audio/main.mp3')
-        pygame.mixer.music.play(-1)
+        # pygame.mixer.music.load('audio/main.mp3')
+        # pygame.mixer.music.play(-1)
         self.ship_blast = pygame.mixer.Sound('audio/laser_blast.mp3')
         self.enemy_destroy = pygame.mixer.Sound('audio/enemy_destroy.mp3')
     
