@@ -77,26 +77,37 @@ class AlienInvasion:
         if len(self.missiles) < self.missile.max_on_display:
             new_missile = ShipMissile(self)
             self.missiles.add(new_missile)
-            self.settings.ship_blast.play()
+            # self.settings.ship_blast.play()
 
 
     def _update_missiles(self):
-        self.missiles.update()
-        for missile in self.missiles.copy():
-            if missile.circle_center_coord[1] <= 1:
-                self.missiles.remove(missile)
-            for enemy in self.enemys.copy():
-                missile_collide = missile.circle_center_coord.copy()
-                missile_collide[0] -= enemy.rect.width / 10
-                missile_collide[1] += enemy.rect.height / 2
-                if enemy.rect.collidepoint(missile_collide):
-                    self.settings.enemy_destroy.play()
-                    self.missiles.remove(missile)
-                    self.enemys.remove(enemy)
+        self.missiles.update() 
+        for self.missile in self.missiles.copy():
+            if self.missile.circle_center_coord[1] <= 1:
+                self.missiles.remove(self.missile)
+            # for enemy in self.enemys.copy(): 
+            #     missile_collide = self.missile.circle_center_coord.copy()
+            #     missile_collide[0] -= enemy.rect.width / 10
+            #     missile_collide[1] += enemy.rect.height / 2
+            #     if enemy.rect.collidepoint(missile_collide):
+            #         # self.settings.enemy_destroy.play()
+            #         self.missiles.remove(missile)
+            #         self.enemys.remove(enemy)
+            self._check_bullets_alien_collisions()
         if not self.enemys:
             self.missiles.empty()
             self._create_enemy_ships()
 
+
+    def _check_bullets_alien_collisions(self):
+        for enemy in self.enemys.copy():
+                missile_collide = self.missile.circle_center_coord.copy()
+                missile_collide[0] -= enemy.rect.width / 10
+                missile_collide[1] += enemy.rect.height / 2
+                if enemy.rect.collidepoint(missile_collide):
+                    # self.settings.enemy_destroy.play()
+                    self.missiles.remove(self.missile)
+                    self.enemys.remove(enemy)
         
             
     def _create_enemy_ships(self):
