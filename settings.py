@@ -14,15 +14,25 @@ class Settings():
         self.milliseconds_counter = 0
         self.fps_counter = 0
         self.returned_fps = 0
-        self.ship_speed_per_sec = 1000
-        self.missile_speed_per_sec = (self.ship_speed_per_sec+200)/self.max_fps
-        self.enemy_x_speed = (self.ship_speed_per_sec /2) / self.max_fps
-        self.enemy_y_speed = (self.ship_speed_per_sec ) / self.max_fps
+        self.speed_multiplier = 1
+        self.ship_speed_per_sec = self.speed_multiplier * 1000
+        self.ship_lives = 3
+        self.missile_speed_per_sec = self.speed_multiplier * (self.ship_speed_per_sec + 200) / self.max_fps
+        self.enemy_x_speed = self.speed_multiplier * (self.ship_speed_per_sec / 2) / self.max_fps
+        self.enemy_y_speed = self.speed_multiplier * (self.ship_speed_per_sec ) / self.max_fps
         self.enemy_direction = 1
-        # pygame.mixer.music.load('audio/main.mp3')
-        # pygame.mixer.music.play(-1)
+        pygame.mixer.music.load('audio/main.mp3')
+        pygame.mixer.music.play(-1)
         self.ship_blast = pygame.mixer.Sound('audio/laser_blast.mp3')
         self.enemy_destroy = pygame.mixer.Sound('audio/enemy_destroy.mp3')
+
+    def _speed_multiplier (self):
+        self.ship_speed_per_sec = self.speed_multiplier * 1000
+        self.missile_speed_per_sec = self.speed_multiplier * (self.ship_speed_per_sec + 200) / self.max_fps
+        self.enemy_x_speed = self.speed_multiplier * (self.ship_speed_per_sec / 2) / self.max_fps
+        self.enemy_y_speed = self.speed_multiplier * (self.ship_speed_per_sec ) / self.max_fps
+
+        
     
     
 
@@ -45,6 +55,6 @@ class Settings():
             self.returned_fps = self.fps_counter
             self.fps_counter = 0
         font = pygame.font.Font(None, 25)
-        self.fps_overlay = font.render(str(int(self.returned_fps)), True, (254,254,254))
+        self.fps_overlay = font.render('fps:'+str(int(self.returned_fps)), True, (254,254,254))
         return (self.fps_overlay)
 

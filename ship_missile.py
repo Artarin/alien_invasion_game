@@ -7,7 +7,7 @@ class ShipMissile(Sprite):
         super().__init__()
         self.screen = ai_game.screen
         self.settings = ai_game.settings
-        self.max_on_display = 3
+        self.max_on_display = 30
         self.missile_speed_per_sec = self.settings.missile_speed_per_sec
         self.missile_radius = 5
         self.missile_color_blue_start = 255
