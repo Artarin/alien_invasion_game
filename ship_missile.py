@@ -9,7 +9,7 @@ class ShipMissile(Sprite):
         self.settings = ai_game.settings
         self.max_on_display = 30
         self.missile_speed_per_sec = self.settings.missile_speed_per_sec
-        self.missile_radius = 5
+        self.missile_radius = 3
         self.missile_color_blue_start = 255
         self.missile_color_blue_finish = 100
         self.missile_delta_color = self.missile_color_blue_start - self.missile_color_blue_finish
