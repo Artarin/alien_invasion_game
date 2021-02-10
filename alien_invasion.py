@@ -63,8 +63,6 @@ class AlienInvasion:
             self._fire_missile()
         if event.key == pygame.K_q:
             sys.exit()
-        if event.key == pygame.K_1:
-            self._move_enemys
         if event.key == pygame.K_t:
             self.ship.teleport = True
         if event.key == pygame.K_RIGHT:
